@@ -1,6 +1,8 @@
 name: Build UniFlux APK
 
 on:
+  on:
+  push:
   workflow_dispatch:
 
 jobs:
