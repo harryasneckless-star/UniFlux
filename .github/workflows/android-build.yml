@@ -1,13 +1,13 @@
 name: Build UniFlux APK
 
-on:
-  on:
+'on':
   push:
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,6 +16,7 @@ jobs:
         run: |
           mkdir project
           unzip -q UniFluxSimple.zip -d project
+          ls -la project
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -25,17 +26,8 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.9'
-
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
 
       - name: Build APK
-        run: gradle --no-daemon -p project assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: UniFlux-debug-apk
-          path: project/app/build/outputs/apk/debug/app-debug.apk
+        run: |
+          cd project
+          gradle assembleDebug --no-daemon
